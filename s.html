@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You 🐰</title>
+    <style>
+        /* Base Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            overflow: hidden;
+            transition: background 1s ease;
+        }
+
+        /* Initial Login Background (Cute Bunnies & Pink) */
+        .login-bg {
+            background-color: #ffb6c1;
+            background-image: radial-gradient(circle, transparent 20%, #ffb6c1 20%, #ffb6c1 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #ffb6c1 20%, #ffb6c1 80%, transparent 80%, transparent) 50px 50px;
+            background-size: 100px 100px;
+            position: relative;
+        }
+        
+        /* Floating Bunnies for Login */
+        .bunny {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        /* Container Styles */
+        #login-container, #message-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10;
+            max-width: 80%;
+        }
+
+        #message-container {
+            display: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Normal Font + 3D Animation for the Room Number Text */
+        .room-title {
+            font-family: Arial, Helvetica, sans-serif; /* Normal font */
+            font-weight: normal;
+            font-size: 2rem;
+            color: #333;
+            display: inline-block;
+            margin-bottom: 20px;
+            margin-top: 0;
+            animation: swing3D 3s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid #ff69b4;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        #error-msg {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Animated Text */
+        .animated-text {
+            font-size: 2.5rem;
+            color: #333;
+            animation: popIn 0.5s ease-out;
+        }
+
+        /* 3D Crying Emoji Animation */
+        .emoji-3d {
+            display: block;
+            font-size: 5rem;
+            margin-top: 20px;
+            animation: spinEmoji3D 1.5s linear infinite;
+        }
+
+        /* Post-Login Background Colors */
+        .party-bg {
+            animation: colorCycle 5s infinite;
+        }
+
+        /* Floating Cute Things */
+        .cute-thing {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 4s linear infinite;
+            z-index: 1;
+        }
+
+        /* Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes swing3D {
+            0% { 
+                transform: perspective(400px) rotateX(10deg) rotateY(-15deg); 
+                text-shadow: 1px 1px 0 #ffb6c1, 2px 2px 0 #ff69b4, 3px 3px 0 #ff1493; 
+            }
+            50% { 
+                transform: perspective(400px) rotateX(-10deg) rotateY(15deg); 
+                text-shadow: -1px -1px 0 #ffb6c1, -2px -2px 0 #ff69b4, -3px -3px 0 #ff1493; 
+            }
+            100% { 
+                transform: perspective(400px) rotateX(10deg) rotateY(-15deg); 
+                text-shadow: 1px 1px 0 #ffb6c1, 2px 2px 0 #ff69b4, 3px 3px 0 #ff1493; 
+            }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes spinEmoji3D {
+            0% { transform: perspective(500px) rotateX(0deg) rotateY(0deg) scale(1); }
+            50% { transform: perspective(500px) rotateX(20deg) rotateY(180deg) scale(1.2); }
+            100% { transform: perspective(500px) rotateX(0deg) rotateY(360deg) scale(1); }
+        }
+
+        @keyframes colorCycle {
+            0% { background-color: #ffb3ba; }
+            25% { background-color: #ffdfba; }
+            50% { background-color: #ffffba; }
+            75% { background-color: #baffc9; }
+            100% { background-color: #ffb3ba; }
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="login-bg" id="body">
+
+    <div class="bunny" style="top: 10%; left: 10%;">🐰</div>
+    <div class="bunny" style="top: 20%; right: 15%; animation-delay: 0.5s;">🐇</div>
+    <div class="bunny" style="bottom: 15%; left: 20%; animation-delay: 1s;">🐰</div>
+    <div class="bunny" style="bottom: 10%; right: 10%; animation-delay: 1.5s;">🐇</div>
+
+    <div id="login-container">
+        <h2 class="room-title">Enter your room number 💖</h2>
+        <br>
+        <input type="text" id="password" placeholder="Room number..."><br>
+        <button onclick="checkPassword()">Unlock</button>
+        <div id="error-msg">Wrong room number! Try again.</div>
+    </div>
+
+    <div id="message-container" onclick="nextMessage()">
+        <div id="message-text" class="animated-text">I have something important to tell you</div>
+    </div>
+
+    <script>
+        const messages = [
+            "I have something important to tell you",
+            "you know what",
+            "you are",
+            "short as fuck",
+            "short as fuck <span class='emoji-3d'>😭</span>"
+        ];
+        
+        let currentIndex = 0;
+
+        function checkPassword() {
+            const pwd = document.getElementById('password').value;
+            if (pwd === "201") {
+                // Hide login, show message
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('message-container').style.display = 'block';
+                
+                // Change background to crazy colors
+                const body = document.getElementById('body');
+                body.className = 'party-bg';
+                
+                // Remove login bunnies and start raining cute things
+                document.querySelectorAll('.bunny').forEach(b => b.remove());
+                spawnCuteThings();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        function nextMessage() {
+            if (currentIndex < messages.length - 1) {
+                currentIndex++;
+                const msgElement = document.getElementById('message-text');
+                msgElement.innerHTML = messages[currentIndex];
+                
+                // Re-trigger animation
+                msgElement.classList.remove('animated-text');
+                void msgElement.offsetWidth; // Trigger reflow
+                msgElement.classList.add('animated-text');
+            }
+        }
+
+        // Creates a shower of cute emojis in the background once logged in
+        function spawnCuteThings() {
+            const emojis = ['🌸', '✨', '💖', '🧸', '🍓', '🎀'];
+            setInterval(() => {
+                const thing = document.createElement('div');
+                thing.className = 'cute-thing';
+                thing.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                thing.style.left = Math.random() * 100 + 'vw';
+                thing.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(thing);
+                
+                setTimeout(() => thing.remove(), 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
